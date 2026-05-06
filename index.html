@@ -353,9 +353,9 @@ textarea{min-height:92px}
   <label for="apiKeyInput">Gemini API Key</label>
   <input type="password" id="apiKeyInput" placeholder="Paste your Google Gemini API key…" autocomplete="off">
   <button class="api-save-btn" onclick="saveApiKey()">Save</button>
-  <span class="api-hint"><a href="#" onclick="openApiGuide(); return false;" style="color:var(--lav);font-weight:800;">🤔 How do I get a free key?</a></span>
+  <button id="authBtn" class="api-save-btn" style="background:var(--lav); border-color:var(--lav); color:#fff;" onclick="openAuthModal()">Login to Sync</button>
+  <span class="api-hint">Free &mdash; <a href="https://aistudio.google.com/apikey" target="_blank">Get a key from Google AI Studio</a></span>
 </div>
-
 <!-- ════ NAV TABS ════ -->
 <nav class="nav-tabs">
   <button class="nav-tab active" onclick="switchTab('grade')">📝 Grade My FRQ</button>
@@ -628,13 +628,125 @@ textarea{min-height:92px}
       </ol>
     </div>
     
-    <div style="background:var(--gold-l);border:1px solid #f0d88a;border-radius:var(--rs);padding:10px 14px;font-size:.8rem;color:var(--gold);font-weight:700;margin-bottom:14px">
-      💡 Guppy stores this key securely in your own browser. We never see it, and no one else can use it.
+   <div style="background:var(--gold-l);border:1px solid #f0d88a;border-radius:var(--rs);padding:10px 14px;font-size:.8rem;color:var(--gold);font-weight:700;margin-bottom:14px">
+      💡 This is a self-contained HTML file — share the file directly, or host it free on GitHub Pages or Netlify Drop for a permanent link.
     </div>
-    
-    <button class="modal-close" onclick="closeApiGuide()">✕ Got it</button>
+    <button class="modal-close" onclick="closeShareModal()">✕ Close</button>
   </div>
 </div>
+
+<div class="modal-overlay" id="authModal" onclick="closeAuthModalBg(event)">
+  <div class="modal" style="max-width: 420px;">
+    <h3>👤 Sign In / Register</h3>
+    <p>Create an account to securely save your API key to the cloud so you don't have to enter it on every device.</p>
+    
+    <button class="submit-btn" style="width:100%; background:#fff; color:#444; border:1.5px solid var(--border); margin-bottom:18px; box-shadow:var(--sh-sm); font-family:'Nunito',sans-serif;" onclick="handleGoogleAuth()">
+      <span style="font-size:1.3rem;">🌍</span> Continue with Google
+    </button>
+
+    <div style="display:flex; align-items:center; margin-bottom:16px;">
+      <div style="flex:1; height:1px; background:var(--border);"></div>
+      <span style="padding:0 12px; color:var(--muted); font-size:.75rem; font-weight:800; letter-spacing:.5px;">OR EMAIL</span>
+      <div style="flex:1; height:1px; background:var(--border);"></div>
+    </div>
+    
+    <div class="field-group">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="student@example.com">
+    </div>
+    <div class="field-group" style="margin-top:12px;">
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="••••••••">
+    </div>
+    
+    <div style="display:flex; gap:10px; margin-top:20px;">
+      <button class="submit-btn" style="flex:1; padding:12px; font-size:1rem;" onclick="handleAuth('login')">Login</button>
+      <button class="submit-btn" style="flex:1; padding:12px; font-size:1rem; background:var(--text);" onclick="handleAuth('register')">Create Account</button>
+    </div>
+    
+    <button class="modal-close" style="margin-top:14px;" onclick="closeAuthModal()">✕ Cancel</button>
+  </div>
+</div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-auth.js";
+  import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAJb4gMEzRtBRFaLfmVgKvFlFMV4MNR8ms",
+    authDomain: "guppy-grader.firebaseapp.com",
+    projectId: "guppy-grader",
+    storageBucket: "guppy-grader.firebasestorage.app",
+    messagingSenderId: "747028533652",
+    appId: "1:747028533652:web:ad534c6cfdf2587e8aff81"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+  const googleProvider = new GoogleAuthProvider();
+
+  // 1. Handle Email/Password Login
+  window.handleAuth = async (action) => {
+    const email = document.getElementById('authEmail').value;
+    const pass = document.getElementById('authPass').value;
+    if(!email || !pass) return toast('⚠️ Please enter an email and password');
+
+    try {
+      if(action === 'register') await createUserWithEmailAndPassword(auth, email, pass);
+      if(action === 'login') await signInWithEmailAndPassword(auth, email, pass);
+      closeAuthModal();
+      toast('✅ Successfully logged in!');
+    } catch(error) {
+      const msg = error.message.includes('auth/') ? error.message.split('auth/')[1].replace(').','') : error.message;
+      toast('❌ Error: ' + msg.replace(/-/g, ' '));
+    }
+  };
+
+  // 2. Handle Google Login
+  window.handleGoogleAuth = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      closeAuthModal();
+      toast('✅ Logged in with Google!');
+    } catch(error) {
+      console.error(error);
+      toast('❌ Google Sign-In failed or was cancelled.');
+    }
+  };
+
+  window.logout = () => signOut(auth);
+
+  // 3. Listen for User State Changes
+  onAuthStateChanged(auth, async (user) => {
+    const authBtn = document.getElementById('authBtn');
+    if(user) {
+      const displayName = user.displayName ? user.displayName.split(' ')[0] : user.email.split('@')[0];
+      authBtn.textContent = 'Logout (' + displayName + ')';
+      authBtn.onclick = window.logout;
+      
+      const docRef = doc(db, "users", user.uid);
+      const docSnap = await getDoc(docRef);
+      if(docSnap.exists() && docSnap.data().apiKey) {
+        document.getElementById('apiKeyInput').value = docSnap.data().apiKey;
+        localStorage.setItem('gemini_api_key', docSnap.data().apiKey);
+        toast('🔑 API Key synced from cloud!');
+      }
+    } else {
+      authBtn.textContent = 'Login to Sync';
+      authBtn.onclick = window.openAuthModal;
+    }
+  });
+
+  // 4. Helper to save key to the cloud
+  window.syncKeyToCloud = async (key) => {
+    if(auth.currentUser) {
+      await setDoc(doc(db, "users", auth.currentUser.uid), { apiKey: key }, { merge: true });
+      toast('☁️ API key securely backed up to cloud!');
+    }
+  };
+</script>
 
 <script>
 // ════ STATE ════
@@ -656,7 +768,10 @@ function saveApiKey(){
   const key = document.getElementById('apiKeyInput').value.trim();
   if(!key){ toast('⚠️ Please enter an API key'); return; }
   localStorage.setItem('gemini_api_key', key);
-  toast('✅ API key saved!');
+  toast('✅ API key saved to browser!');
+  
+  // If they are logged in, push it to the cloud database!
+  if(window.syncKeyToCloud) window.syncKeyToCloud(key); 
 }
 function getApiKey(){
   const input = document.getElementById('apiKeyInput').value.trim();
@@ -1199,18 +1314,18 @@ const RESOURCES={
   leq:[
     {icon:'📘',label:'AP LEQ Tips',sub:'College Board official guide to LEQ structure',url:'https://apstudents.collegeboard.org/courses/ap-world-history-modern/assessment',tag:'cb'},
     {icon:'🎬',label:'Marco Learning LEQ',sub:'Video walkthrough of the LEQ rubric',url:'https://www.marcolearning.com/ap-world-history/leq/',tag:'video'},
-    {icon:'✍️',label:'Heimler\'s History LEQ',sub:'YouTube series on LEQ writing strategies',url:'https://www.youtube.com/@HeimlerHistory',tag:'video'},
+    {icon:'✍️',label:'Heimler\'s History LEQ',sub:'YouTube series on LEQ writing strategies',url:'https://www.youtube.com/watch?v=5WmiOO_wmNU',tag:'video'},
     {icon:'📝',label:'AP Classroom Practice',sub:'Official CB practice prompts and scoring',url:'https://myap.collegeboard.org/',tag:'practice'},
   ],
   dbq:[
     {icon:'📘',label:'DBQ Project Overview',sub:'College Board DBQ scoring guidelines',url:'https://apstudents.collegeboard.org/courses/ap-world-history-modern/assessment',tag:'cb'},
-    {icon:'🎬',label:'Heimler DBQ Guide',sub:'Step-by-step DBQ video tutorial',url:'https://www.youtube.com/@HeimlerHistory',tag:'video'},
+    {icon:'🎬',label:'Heimler DBQ Guide',sub:'Step-by-step DBQ video tutorial',url:'https://www.youtube.com/watch?v=IHDsTD5Rdpc',tag:'video'},
     {icon:'📄',label:'HAPP Sourcing Guide',sub:'How to analyze Historical situation, Audience, Purpose, POV',url:'https://www.reddit.com/r/APStudents/',tag:'guide'},
     {icon:'🏋️',label:'AP Classroom DBQ Sets',sub:'Official released DBQ prompts with docs',url:'https://myap.collegeboard.org/',tag:'practice'},
   ],
   saq:[
     {icon:'📘',label:'SAQ Rubric Breakdown',sub:'Official College Board SAQ scoring',url:'https://apstudents.collegeboard.org/courses/ap-world-history-modern/assessment',tag:'cb'},
-    {icon:'🎬',label:'Heimler SAQ Walkthrough',sub:'Video on how to nail each SAQ part',url:'https://www.youtube.com/@HeimlerHistory',tag:'video'},
+    {icon:'🎬',label:'Heimler SAQ Walkthrough',sub:'Video on how to nail each SAQ part',url:'https://www.youtube.com/watch?v=I0842_d6Bjs',tag:'video'},
     {icon:'📝',label:'Practice SAQs',sub:'Khan Academy AP History SAQ practice',url:'https://www.khanacademy.org/humanities/ap-us-history',tag:'practice'},
     {icon:'📖',label:'SAQ Writing Strategies',sub:'How to write concise, high-scoring SAQ answers',url:'https://apstudents.collegeboard.org/',tag:'guide'},
   ],
@@ -1242,6 +1357,11 @@ function openShareModal(){
 }
 function closeShareModal(){ document.getElementById('shareModal').classList.remove('open'); }
 function closeShareModalBg(e){ if(e.target===document.getElementById('shareModal')) closeShareModal(); }
+
+// ════ AUTH MODAL LOGIC ════
+function openAuthModal() { document.getElementById('authModal').classList.add('open'); }
+function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
+function closeAuthModalBg(e) { if(e.target === document.getElementById('authModal')) closeAuthModal(); }
 async function copyShareLink(){
   const link=window.location.href;
   try{ await navigator.clipboard.writeText(link); toast('✅ Link copied!'); }
