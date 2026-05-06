@@ -353,7 +353,7 @@ textarea{min-height:92px}
   <label for="apiKeyInput">Gemini API Key</label>
   <input type="password" id="apiKeyInput" placeholder="Paste your Google Gemini API key…" autocomplete="off">
   <button class="api-save-btn" onclick="saveApiKey()">Save</button>
-  <span class="api-hint">Free &mdash; <a href="https://aistudio.google.com/apikey" target="_blank">Get a key from Google AI Studio</a></span>
+  <span class="api-hint"><a href="#" onclick="openApiGuide(); return false;" style="color:var(--lav);font-weight:800;">🤔 How do I get a free key?</a></span>
 </div>
 
 <!-- ════ NAV TABS ════ -->
@@ -557,9 +557,26 @@ textarea{min-height:92px}
     <div class="outline-fb" id="outlineFb"></div>
   </div>
 </div>
-</div><!-- end #tab-outline -->
+</div><div class="container" style="padding-top: 40px; padding-bottom: 60px;">
+  <h3 style="font-family:'Playfair Display',serif; font-size: 1.5rem; color: var(--text); margin-bottom: 20px; text-align: center;">💬 Student Discussion Forum</h3>
+  
+<script src="https://giscus.app/client.js"
+        data-repo="j4igupta/Frq-Grader"
+        data-repo-id="R_kgDOSVZjXQ"
+        data-category="General"
+        data-category-id="DIC_kwDOSVZjXc4C8bBR"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="en"
+        crossorigin="anonymous"
+        async>
+</script>
+</div>
 
-<!-- ════ CONTACT FOOTER ════ -->
 <footer class="contact-footer">
   <h3>🐟 Questions? Bugs? Fan mail?</h3>
   <p>Guppy reads every email (with his little fishy eyes). Whether you found a bug, have a suggestion, or just want to say your essay got a 7/7 — reach out!</p>
@@ -594,6 +611,28 @@ textarea{min-height:92px}
       💡 This is a self-contained HTML file — share the file directly, or host it free on GitHub Pages or Netlify Drop for a permanent link.
     </div>
     <button class="modal-close" onclick="closeShareModal()">✕ Close</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="apiGuideModal" onclick="closeApiGuideBg(event)">
+  <div class="modal" style="max-width: 550px;">
+    <h3>🔑 How to get a Free Gemini API Key</h3>
+    <p>Google provides free API keys that allow you to use Guppy's FRQ Grader for zero cost. It takes 60 seconds.</p>
+    
+    <div style="background: var(--cream); border: 1.5px solid var(--border); border-radius: var(--rs); padding: 16px; margin-bottom: 16px; font-size: .88rem; line-height: 1.6;">
+      <ol style="margin-left: 20px; color: var(--text2); font-weight: 600;">
+        <li style="margin-bottom: 8px;">Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--sky); text-decoration: none; font-weight: 800;">Google AI Studio</a> and sign in with a <strong>personal</strong> Google account (not a school/work email).</li>
+        <li style="margin-bottom: 8px;">Click the blue <strong>"Create API key"</strong> button.</li>
+        <li style="margin-bottom: 8px;">Select <strong>"Create API key in a new project"</strong>.</li>
+        <li>Copy that long string of text, paste it into the bar at the top of this page, and hit <strong>Save</strong>!</li>
+      </ol>
+    </div>
+    
+    <div style="background:var(--gold-l);border:1px solid #f0d88a;border-radius:var(--rs);padding:10px 14px;font-size:.8rem;color:var(--gold);font-weight:700;margin-bottom:14px">
+      💡 Guppy stores this key securely in your own browser. We never see it, and no one else can use it.
+    </div>
+    
+    <button class="modal-close" onclick="closeApiGuide()">✕ Got it</button>
   </div>
 </div>
 
@@ -1220,6 +1259,11 @@ function shareVia(method){
     else{ copyShareLink(); closeShareModal(); }
   }
 }
+
+// ════ API GUIDE MODAL ════
+function openApiGuide() { document.getElementById('apiGuideModal').classList.add('open'); }
+function closeApiGuide() { document.getElementById('apiGuideModal').classList.remove('open'); }
+function closeApiGuideBg(e) { if(e.target === document.getElementById('apiGuideModal')) closeApiGuide(); }
 
 // ════ HELPERS ════
 function show(id){ const el=document.getElementById(id); if(el){el.classList.remove('hidden');el.style.display='';} }
