@@ -137,7 +137,7 @@ textarea{min-height:92px}
 .submit-btn:active{transform:translateY(0)}
 
 /* ── LOADING ── */
-#loading{display:none;text-align:center;padding:60px 20px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--border);margin-bottom:18px}
+#loading{text-align:center;padding:60px 20px;background:var(--card);border-radius:var(--r);box-shadow:var(--sh);border:1px solid var(--border);margin-bottom:18px}
 .spin-wrap{position:relative;width:54px;height:54px;margin:0 auto 18px}
 .spin-r{position:absolute;inset:0;border-radius:50%;border:4px solid transparent}
 .spin-r:nth-child(1){border-top-color:var(--sky);animation:spin 1s linear infinite}
@@ -147,7 +147,7 @@ textarea{min-height:92px}
 .load-s{font-size:.86rem;color:var(--muted);font-weight:600}
 
 /* ── RESULTS ── */
-#results{display:none;background:var(--card);border-radius:var(--r);box-shadow:var(--sh-lg);border:1px solid var(--border);margin-bottom:18px;overflow:hidden;animation:up .5s cubic-bezier(.16,1,.3,1) both}
+#results{background:var(--card);border-radius:var(--r);box-shadow:var(--sh-lg);border:1px solid var(--border);margin-bottom:18px;overflow:hidden;animation:up .5s cubic-bezier(.16,1,.3,1) both}
 .res-hdr{padding:22px 26px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .res-hdr h2{font-family:'Playfair Display',serif;font-size:1.38rem;color:var(--text);flex:1}
 .score-badge{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;padding:7px 20px;border-radius:50px;color:#fff}
@@ -413,8 +413,8 @@ textarea{min-height:92px}
   </div>
 
   <!-- ── LOADING ── -->
-  <div id="loading">
-    <div class="spin-wrap"><div class="spin-r"></div><div class="spin-r"></div></div>
+<div id="loading" class="hidden">
+  <div class="spin-wrap"><div class="spin-r"></div><div class="spin-r"></div></div>
     <div class="load-t" id="loadMsg">Analyzing your response…</div>
     <div class="load-s">Applying College Board rubric criteria</div>
     <div class="joke-box">
@@ -424,8 +424,8 @@ textarea{min-height:92px}
   </div>
 
   <!-- ── RESULTS ── -->
-  <div id="results">
-    <div class="res-hdr">
+<div id="results" class="hidden">
+  <div class="res-hdr">
       <h2>📋 Grading Results</h2>
       <div class="score-badge" id="scoreBadge"></div>
     </div>
