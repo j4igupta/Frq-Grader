@@ -660,8 +660,18 @@ async function callGemini(textContent, images, maxTokens, retries = 4) {
     const res = await fetch(url, payload);
     const data = await res.json();
     
+    // If we get a 429 error, wait and try again
     if (res.status === 429) {
-      if (i === retries - 1) throw new Error('Guppy is overwhelmed! Too many requests. Please wait a minute and try again.');
+      // Clone the response so we can read the exact error message from Google
+      const errorDetails = await res.clone().text(); 
+      console.warn(`Attempt ${i + 1} failed with 429. Google says:`, errorDetails);
+
+      if (i === retries - 1) {
+         // Show the actual error on the screen so you know what's wrong!
+         let parsedMsg = "Too many requests.";
+         try { parsedMsg = JSON.parse(errorDetails).error.message; } catch(e){}
+         throw new Error(`Google blocked the request. Reason: ${parsedMsg}`);
+      }
       
       const waitTime = 2000 * Math.pow(2, i);
       console.log(`Hit 429 error. Retrying in ${waitTime/1000} seconds...`);
