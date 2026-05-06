@@ -672,12 +672,18 @@ textarea{min-height:92px}
       </div>
       <div class="field-group" style="margin-bottom:6px;">
         <label style="font-size:.75rem">Password</label>
-        <input type="password" id="authPass" placeholder="••••••••" style="border-radius:10px;padding:11px 14px;font-size:.92rem;" onkeydown="if(event.key==='Enter') handleAuth(currentAuthTab)">
+        <input type="password" id="authPass" placeholder="••••••••" style="border-radius:10px;padding:11px 14px;font-size:.92rem;" onkeydown="if(event.key==='Enter') handleAuth(currentAuthTab)" oninput="clearFieldError('authPassError')">
+        <div id="authPassError" style="display:none;margin-top:5px;font-size:.78rem;font-weight:700;color:var(--coral);">
+          <span>🔒</span> <span id="authPassErrorMsg"></span>
+        </div>
       </div>
 
       <div id="authRegisterExtra" style="display:none;margin-bottom:6px;">
         <label style="font-size:.75rem;display:block;font-weight:700;color:var(--text2);margin-bottom:5px;text-transform:uppercase;letter-spacing:.5px">Confirm Password</label>
-        <input type="password" id="authPassConfirm" placeholder="••••••••" style="border-radius:10px;padding:11px 14px;font-size:.92rem;width:100%;border:1.5px solid var(--border);outline:none;font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);">
+        <input type="password" id="authPassConfirm" placeholder="••••••••" style="border-radius:10px;padding:11px 14px;font-size:.92rem;width:100%;border:1.5px solid var(--border);outline:none;font-family:'Nunito',sans-serif;color:var(--text);background:var(--cream);" oninput="clearFieldError('authConfirmError')">
+        <div id="authConfirmError" style="display:none;margin-top:5px;font-size:.78rem;font-weight:700;color:var(--coral);">
+          <span>🔒</span> <span id="authConfirmErrorMsg"></span>
+        </div>
       </div>
 
       <button id="authSubmitBtn" onclick="handleAuth(currentAuthTab)" style="width:100%;margin-top:16px;padding:13px;border:none;border-radius:12px;background:linear-gradient(135deg,var(--sky) 0%,var(--lav) 100%);color:#fff;font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(26,122,191,.32);transition:all .22s;display:flex;align-items:center;justify-content:center;gap:8px" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(26,122,191,.42)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(26,122,191,.32)'">
@@ -792,16 +798,52 @@ function _fbError(err) {
   toast('❌ ' + (msg || (err.code || err.message).replace('auth/','').replace(/-/g,' ')));
 }
 
+// ── Field error helpers ──
+function showFieldError(errorDivId, msgId, message) {
+  const passEl = document.getElementById('authPass');
+  if (passEl) { passEl.style.borderColor = 'var(--coral)'; passEl.style.boxShadow = '0 0 0 3px rgba(232,86,74,.12)'; }
+  const div = document.getElementById(errorDivId);
+  const msg = document.getElementById(msgId);
+  if (div && msg) { msg.textContent = message; div.style.display = 'flex'; div.style.alignItems = 'center'; div.style.gap = '5px'; }
+}
+function clearFieldError(errorDivId) {
+  const div = document.getElementById(errorDivId);
+  if (div) div.style.display = 'none';
+  const passEl = document.getElementById('authPass');
+  if (passEl) { passEl.style.borderColor = ''; passEl.style.boxShadow = ''; }
+}
+function clearAllFieldErrors() {
+  clearFieldError('authPassError');
+  clearFieldError('authConfirmError');
+}
+
 // ── Public auth functions (called by buttons) ──
 async function handleAuth(action) {
   if (!_auth) { toast('⚠️ Auth is still loading — try again in a moment.'); return; }
+  clearAllFieldErrors();
   const email = document.getElementById('authEmail').value.trim();
   const pass  = document.getElementById('authPass').value;
   if (!email || !pass) { toast('⚠️ Please enter an email and password.'); return; }
+
+  // Client-side password length check — show inline under the field
+  if (pass.length < 6) {
+    showFieldError('authPassError', 'authPassErrorMsg', 'Password must be at least 6 characters.');
+    document.getElementById('authPass').focus();
+    return;
+  }
+
   if (action === 'register') {
     const confirmEl = document.getElementById('authPassConfirm');
-    if (confirmEl && confirmEl.value !== pass) { toast('⚠️ Passwords do not match.'); return; }
+    if (confirmEl && confirmEl.value !== pass) {
+      const div = document.getElementById('authConfirmError');
+      const msg = document.getElementById('authConfirmErrorMsg');
+      if (div && msg) { msg.textContent = "Passwords don't match."; div.style.display = 'flex'; div.style.alignItems = 'center'; div.style.gap = '5px'; }
+      confirmEl.style.borderColor = 'var(--coral)';
+      confirmEl.focus();
+      return;
+    }
   }
+
   const btn = document.getElementById('authSubmitBtn');
   if (btn) { btn.disabled = true; btn.innerHTML = '<span class="mini-spin"></span> Please wait…'; }
   try {
@@ -809,7 +851,21 @@ async function handleAuth(action) {
     if (action === 'login')    await _auth.signInWithEmailAndPassword(email, pass);
     closeAuthModal();
     toast('✅ Signed in successfully!');
-  } catch(err) { _fbError(err); }
+  } catch(err) {
+    // Show Firebase errors inline under the password field too
+    const raw = err.code || '';
+    const passErrors = ['auth/wrong-password','auth/invalid-credential','auth/weak-password'];
+    if (passErrors.includes(raw)) {
+      const msgs = {
+        'auth/wrong-password': 'Incorrect password.',
+        'auth/invalid-credential': 'Incorrect email or password.',
+        'auth/weak-password': 'Password must be at least 6 characters.',
+      };
+      showFieldError('authPassError', 'authPassErrorMsg', msgs[raw] || 'Incorrect password.');
+    } else {
+      _fbError(err);
+    }
+  }
   finally {
     if (btn) {
       btn.disabled = false;
@@ -821,10 +877,23 @@ async function handleAuth(action) {
 async function handleGoogleAuth() {
   if (!_auth) { toast('⚠️ Auth is still loading — try again in a moment.'); return; }
   try {
-    await _auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    const provider = new firebase.auth.GoogleAuthProvider();
+    provider.setCustomParameters({ prompt: 'select_account' });
+    await _auth.signInWithPopup(provider);
     closeAuthModal();
     toast('✅ Logged in with Google!');
-  } catch(err) { _fbError(err); }
+  } catch(err) {
+    if (err.code === 'auth/popup-closed-by-user') return;
+    if (err.code === 'auth/unauthorized-domain') {
+      toast('⚠️ Add this domain to Firebase → Authentication → Authorized Domains');
+      return;
+    }
+    if (err.code === 'auth/popup-blocked') {
+      toast('⚠️ Popup was blocked — allow popups for this site and try again.');
+      return;
+    }
+    _fbError(err);
+  }
 }
 
 function logout() { if (_auth) _auth.signOut(); }
@@ -1503,7 +1572,7 @@ function closeShareModalBg(e){ if(e.target===document.getElementById('shareModal
 
 // ════ AUTH MODAL LOGIC ════
 function openAuthModal() { document.getElementById('authModal').classList.add('open'); }
-function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); }
+function closeAuthModal() { document.getElementById('authModal').classList.remove('open'); clearAllFieldErrors(); document.getElementById('authPass').value=''; document.getElementById('authEmail').value=''; }
 function closeAuthModalBg(e) { if(e.target === document.getElementById('authModal')) closeAuthModal(); }
 async function copyShareLink(){
   const link=window.location.href;
