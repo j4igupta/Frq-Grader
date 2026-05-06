@@ -42,6 +42,24 @@ header h1 em{color:var(--sky);font-style:normal}
 header h1 strong{color:var(--lav)}
 .header-sub{margin-top:10px;font-size:.88rem;color:var(--muted);font-weight:700;letter-spacing:.3px;text-transform:uppercase}
 
+/* ── API KEY BAR ── */
+.api-bar{position:relative;z-index:10;background:var(--white);border-bottom:1px solid var(--border);padding:10px 20px;display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.api-bar label{font-size:.78rem;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.4px;margin-bottom:0}
+.api-bar input{width:320px;max-width:50vw;border:1.5px solid var(--border);border-radius:8px;padding:7px 12px;font-family:'Nunito',sans-serif;font-size:.85rem;color:var(--text);background:var(--cream);outline:none;transition:border-color .18s}
+.api-bar input:focus{border-color:var(--sky)}
+.api-bar .api-hint{font-size:.73rem;color:var(--muted);font-weight:600}
+.api-bar .api-hint a{color:var(--sky);text-decoration:none}
+.api-bar .api-hint a:hover{text-decoration:underline}
+.api-save-btn{border:1.5px solid var(--sky);background:var(--sky-l);color:var(--sky);border-radius:8px;padding:6px 14px;font-family:'Nunito',sans-serif;font-weight:700;font-size:.8rem;cursor:pointer;transition:all .15s}
+.api-save-btn:hover{background:var(--sky);color:#fff}
+
+/* ── TOOL NAV ── */
+.tool-nav{position:relative;z-index:10;background:var(--white);border-bottom:1px solid var(--border);padding:8px 20px;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+.tool-btn{border:1.5px solid var(--border);background:var(--cream);border-radius:var(--rs);padding:9px 18px;cursor:pointer;font-family:'Nunito',sans-serif;font-weight:700;font-size:.85rem;color:var(--text2);transition:all .2s;display:flex;align-items:center;gap:7px}
+.tool-btn:hover{border-color:var(--sky);color:var(--sky)}
+.tool-btn.active{border-color:var(--sky);background:var(--sky-l);color:var(--sky);box-shadow:var(--sh-sm)}
+.tool-btn .tool-icon{font-size:1.1rem}
+
 /* ── CONTAINER ── */
 .container{position:relative;z-index:5;max-width:880px;margin:0 auto;padding:32px 20px 110px}
 
@@ -158,6 +176,12 @@ textarea{min-height:92px}
 .retry-btn{width:100%;padding:12px;border:1.5px solid var(--border);border-radius:var(--rs);background:#fff;color:var(--text2);font-family:'Nunito',sans-serif;font-weight:700;font-size:.9rem;cursor:pointer;transition:all .2s;margin-top:6px;display:flex;align-items:center;justify-content:center;gap:7px}
 .retry-btn:hover{border-color:var(--lav);color:var(--lav);background:var(--lav-l)}
 
+/* ── CHECKER RESULTS ── */
+.checker-result{background:var(--card);border-radius:var(--r);box-shadow:var(--sh-lg);border:1px solid var(--border);margin-bottom:18px;overflow:hidden;animation:up .5s cubic-bezier(.16,1,.3,1) both}
+.checker-result .res-hdr{padding:18px 22px 14px}
+.checker-result .res-body{padding:16px 22px 22px}
+.checker-feedback{white-space:pre-wrap;font-size:.92rem;line-height:1.7;color:var(--text)}
+
 .hidden{display:none!important}
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(12px);background:var(--text);color:#fff;padding:8px 20px;border-radius:50px;font-size:.83rem;font-weight:700;opacity:0;pointer-events:none;transition:all .3s;z-index:1000;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
@@ -165,11 +189,22 @@ textarea{min-height:92px}
 footer{position:relative;z-index:5;text-align:center;padding:18px;font-size:.81rem;color:var(--muted);font-weight:600;border-top:1px solid var(--border);background:rgba(255,255,255,.5)}
 footer strong{color:var(--text2)}
 
+/* ── TOOL SECTIONS ── */
+.tool-section{display:none}
+.tool-section.active{display:block}
+
+/* ── CHECKER DESCRIPTION ── */
+.checker-desc{font-size:.88rem;color:var(--text2);line-height:1.6;margin-bottom:18px;font-weight:600}
+
 @media(max-width:580px){
   .course-grid{grid-template-columns:1fr}
   .type-grid{grid-template-columns:1fr}
   .card{padding:18px 16px}
   .res-hdr,.res-body{padding-left:16px;padding-right:16px}
+  .tool-nav{gap:4px;padding:6px 10px}
+  .tool-btn{padding:7px 12px;font-size:.78rem}
+  .api-bar{flex-direction:column;gap:6px}
+  .api-bar input{width:100%;max-width:100%}
 }
 </style>
 </head>
@@ -221,74 +256,162 @@ footer strong{color:var(--text2)}
         <circle cx="5" cy="-18" r="2" fill="#c9932a"/>
       </g>
       <!-- Stars around globe -->
-      <text x="12" y="28" font-size="9" fill="#c9932a">★</text>
-      <text x="87" y="32" font-size="7" fill="#c9932a">★</text>
-      <text x="8" y="68" font-size="6" fill="#7c5cbf">★</text>
-      <text x="92" y="72" font-size="8" fill="#7c5cbf">★</text>
+      <text x="12" y="28" font-size="9" fill="#c9932a">&#9733;</text>
+      <text x="87" y="32" font-size="7" fill="#c9932a">&#9733;</text>
+      <text x="8" y="68" font-size="6" fill="#7c5cbf">&#9733;</text>
+      <text x="92" y="72" font-size="8" fill="#7c5cbf">&#9733;</text>
     </svg>
   </div>
   <h1><strong>Guppy's</strong> <em>FRQ Grader</em></h1>
-  <div class="header-sub">Official College Board Rubrics · DBQ · LEQ · SAQ</div>
+  <div class="header-sub">Official College Board Rubrics &middot; DBQ &middot; LEQ &middot; SAQ</div>
 </header>
+
+<!-- ════════════ API KEY BAR ════════════ -->
+<div class="api-bar">
+  <label for="apiKeyInput">Gemini API Key</label>
+  <input type="password" id="apiKeyInput" placeholder="Paste your Google Gemini API key…" autocomplete="off">
+  <button class="api-save-btn" onclick="saveApiKey()">Save</button>
+  <span class="api-hint">Free &mdash; <a href="https://aistudio.google.com/apikey" target="_blank">Get a key from Google AI Studio</a></span>
+</div>
+
+<!-- ════════════ TOOL NAVIGATION ════════════ -->
+<div class="tool-nav">
+  <button class="tool-btn active" onclick="switchTool('grader',this)">
+    <span class="tool-icon">&#x1F4DD;</span> Grader
+  </button>
+  <button class="tool-btn" onclick="switchTool('context',this)">
+    <span class="tool-icon">&#x1F30D;</span> Context Checker
+  </button>
+  <button class="tool-btn" onclick="switchTool('evidence',this)">
+    <span class="tool-icon">&#x1F4DA;</span> Evidence Checker
+  </button>
+  <button class="tool-btn" onclick="switchTool('outline',this)">
+    <span class="tool-icon">&#x1F4CB;</span> Outline Checker
+  </button>
+</div>
 
 <div class="container">
 
-  <!-- ── STEP 1: COURSE ── -->
-  <div class="card" id="step1">
-    <div class="step-label"><div class="step-num">1</div><div class="step-title">Select Your Course</div></div>
-    <div class="course-grid">
-      <button class="course-btn" onclick="selectCourse('apwh',this)">
-        <span class="cb-icon">🌍</span>
-        <span><span class="cb-name">AP World History</span><span class="cb-full">Modern · 1200–Present</span></span>
-      </button>
-      <button class="course-btn" onclick="selectCourse('apush',this)">
-        <span class="cb-icon">🦅</span>
-        <span><span class="cb-name">APUSH</span><span class="cb-full">AP United States History</span></span>
-      </button>
-      <button class="course-btn" onclick="selectCourse('apeuro',this)">
-        <span class="cb-icon">🏰</span>
-        <span><span class="cb-name">AP European History</span><span class="cb-full">1450–Present</span></span>
-      </button>
-      <button class="course-btn" onclick="selectCourse('apaas',this)">
-        <span class="cb-icon">✊</span>
-        <span><span class="cb-name">AP African American Studies</span><span class="cb-full">Interdisciplinary · FRQ</span></span>
-      </button>
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═══     GRADER SECTION          ═══ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="tool-section active" id="tool-grader">
+
+    <!-- ── STEP 1: COURSE ── -->
+    <div class="card" id="step1">
+      <div class="step-label"><div class="step-num">1</div><div class="step-title">Select Your Course</div></div>
+      <div class="course-grid">
+        <button class="course-btn" onclick="selectCourse('apwh',this)">
+          <span class="cb-icon">&#x1F30D;</span>
+          <span><span class="cb-name">AP World History</span><span class="cb-full">Modern &middot; 1200&ndash;Present</span></span>
+        </button>
+        <button class="course-btn" onclick="selectCourse('apush',this)">
+          <span class="cb-icon">&#x1F985;</span>
+          <span><span class="cb-name">APUSH</span><span class="cb-full">AP United States History</span></span>
+        </button>
+        <button class="course-btn" onclick="selectCourse('apeuro',this)">
+          <span class="cb-icon">&#x1F3F0;</span>
+          <span><span class="cb-name">AP European History</span><span class="cb-full">1450&ndash;Present</span></span>
+        </button>
+        <button class="course-btn" onclick="selectCourse('apaas',this)">
+          <span class="cb-icon">&#x270A;</span>
+          <span><span class="cb-name">AP African American Studies</span><span class="cb-full">Interdisciplinary &middot; FRQ</span></span>
+        </button>
+      </div>
     </div>
-  </div>
 
-  <!-- ── STEP 2: TYPE ── -->
-  <div class="card hidden" id="step2">
-    <div class="step-label"><div class="step-num">2</div><div class="step-title">Select Question Type</div></div>
-    <div class="type-grid" id="typeGrid"></div>
-  </div>
-
-  <!-- ── STEP 3: DETAILS ── -->
-  <div class="card hidden" id="step3">
-    <div class="step-label"><div class="step-num">3</div><div class="step-title" id="step3title">Question Details</div></div>
-    <div id="step3content"></div>
-  </div>
-
-  <!-- ── STEP 4: RESPONSE ── -->
-  <div class="card hidden" id="step4">
-    <div class="step-label"><div class="step-num">4</div><div class="step-title">Your Response</div></div>
-    <div class="field-group">
-      <label for="userResponse">Student Response <span class="hint">— type or paste your full essay / answer</span></label>
-      <textarea id="userResponse" rows="14" placeholder="Write or paste your response here…"></textarea>
+    <!-- ── STEP 2: TYPE ── -->
+    <div class="card hidden" id="step2">
+      <div class="step-label"><div class="step-num">2</div><div class="step-title">Select Question Type</div></div>
+      <div class="type-grid" id="typeGrid"></div>
     </div>
-    <button class="submit-btn" onclick="submitGrade()">Grade My Work <span style="font-size:1.1rem">→</span></button>
-  </div>
+
+    <!-- ── STEP 3: DETAILS ── -->
+    <div class="card hidden" id="step3">
+      <div class="step-label"><div class="step-num">3</div><div class="step-title" id="step3title">Question Details</div></div>
+      <div id="step3content"></div>
+    </div>
+
+    <!-- ── STEP 4: RESPONSE ── -->
+    <div class="card hidden" id="step4">
+      <div class="step-label"><div class="step-num">4</div><div class="step-title">Your Response</div></div>
+      <div class="field-group">
+        <label for="userResponse">Student Response <span class="hint">&mdash; type or paste your full essay / answer</span></label>
+        <textarea id="userResponse" rows="14" placeholder="Write or paste your response here&#8230;"></textarea>
+      </div>
+      <button class="submit-btn" onclick="submitGrade()">Grade My Work <span style="font-size:1.1rem">&rarr;</span></button>
+    </div>
+
+  </div><!-- /tool-grader -->
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═══   CONTEXT CHECKER SECTION   ═══ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="tool-section" id="tool-context">
+    <div class="card">
+      <div class="step-label">
+        <div class="step-num" style="background:var(--mint)">&#x1F30D;</div>
+        <div class="step-title">Context Checker</div>
+      </div>
+      <p class="checker-desc">Paste or upload your contextualization paragraph (or an image of it). The AI will check whether it properly establishes broader historical context and connects meaningfully to your argument &mdash; scored on the College Board rubric.</p>
+      <div class="field-group">
+        <label>Your Contextualization <span class="hint">&mdash; paste an image or type your context paragraph</span></label>
+        <div id="contextCheckerUib"></div>
+      </div>
+      <button class="submit-btn" onclick="submitChecker('context')">Check My Context <span style="font-size:1.1rem">&rarr;</span></button>
+    </div>
+    <div id="contextResult"></div>
+  </div><!-- /tool-context -->
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═══   EVIDENCE CHECKER SECTION  ═══ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="tool-section" id="tool-evidence">
+    <div class="card">
+      <div class="step-label">
+        <div class="step-num" style="background:var(--gold)">&#x1F4DA;</div>
+        <div class="step-title">Evidence Checker</div>
+      </div>
+      <p class="checker-desc">Paste or upload your evidence paragraph(s) (or an image). The AI will check whether your evidence is specific, relevant, and properly used to support your argument &mdash; not just listed or described.</p>
+      <div class="field-group">
+        <label>Your Evidence <span class="hint">&mdash; paste an image or type your evidence paragraph(s)</span></label>
+        <div id="evidenceCheckerUib"></div>
+      </div>
+      <button class="submit-btn" onclick="submitChecker('evidence')">Check My Evidence <span style="font-size:1.1rem">&rarr;</span></button>
+    </div>
+    <div id="evidenceResult"></div>
+  </div><!-- /tool-evidence -->
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- ═══   OUTLINE CHECKER SECTION   ═══ -->
+  <!-- ═══════════════════════════════════ -->
+  <div class="tool-section" id="tool-outline">
+    <div class="card">
+      <div class="step-label">
+        <div class="step-num" style="background:var(--coral)">&#x1F4CB;</div>
+        <div class="step-title">Outline Checker</div>
+      </div>
+      <p class="checker-desc">Paste or upload your essay outline (or an image of it). The AI will check whether your outline has a clear thesis, logical organization, planned evidence, and addresses the complexity point.</p>
+      <div class="field-group">
+        <label>Your Outline <span class="hint">&mdash; paste an image or type your outline</span></label>
+        <div id="outlineCheckerUib"></div>
+      </div>
+      <button class="submit-btn" onclick="submitChecker('outline')">Check My Outline <span style="font-size:1.1rem">&rarr;</span></button>
+    </div>
+    <div id="outlineResult"></div>
+  </div><!-- /tool-outline -->
 
   <!-- ── LOADING ── -->
   <div id="loading">
     <div class="spin-wrap"><div class="spin-r"></div><div class="spin-r"></div></div>
-    <div class="load-t">Analyzing your response…</div>
+    <div class="load-t">Analyzing your response&#8230;</div>
     <div class="load-s">Applying College Board rubric criteria</div>
   </div>
 
-  <!-- ── RESULTS ── -->
+  <!-- ── RESULTS (grader) ── -->
   <div id="results">
     <div class="res-hdr">
-      <h2>📋 Grading Results</h2>
+      <h2>&#x1F4CB; Grading Results</h2>
       <div class="score-badge" id="scoreBadge"></div>
     </div>
     <div class="res-body" id="resBody"></div>
@@ -296,14 +419,50 @@ footer strong{color:var(--text2)}
 
 </div>
 
-<footer>Built for AP History students &nbsp;·&nbsp; <strong>created by jguppy</strong></footer>
+<footer>Built for AP History students &nbsp;&middot;&nbsp; <strong>created by jguppy</strong></footer>
 <div class="toast" id="toast"></div>
 
 <script>
 // ════ STATE ════
 let currentCourse = null;
 let currentType   = null;
-const IMG = {}; // key → base64
+let currentTool   = 'grader';
+const IMG = {}; // key -> base64
+
+// ════ INIT ════
+(function init(){
+  // Load saved API key
+  const saved = localStorage.getItem('gemini_api_key');
+  if(saved) document.getElementById('apiKeyInput').value = saved;
+  // Build checker UIBs
+  document.getElementById('contextCheckerUib').innerHTML = uib('checker_context','Paste or type your contextualization paragraph here…',5);
+  document.getElementById('evidenceCheckerUib').innerHTML = uib('checker_evidence','Paste or type your evidence paragraph(s) here…',5);
+  document.getElementById('outlineCheckerUib').innerHTML = uib('checker_outline','Paste or type your essay outline here…',6);
+})();
+
+// ════ API KEY ════
+function saveApiKey(){
+  const key = document.getElementById('apiKeyInput').value.trim();
+  if(!key){ toast('Please enter an API key'); return; }
+  localStorage.setItem('gemini_api_key', key);
+  toast('API key saved!');
+}
+function getApiKey(){
+  const input = document.getElementById('apiKeyInput').value.trim();
+  if(input) localStorage.setItem('gemini_api_key', input);
+  return input || localStorage.getItem('gemini_api_key') || '';
+}
+
+// ════ TOOL SWITCHING ════
+function switchTool(tool, btn){
+  currentTool = tool;
+  document.querySelectorAll('.tool-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.tool-section').forEach(s=>s.classList.remove('active'));
+  const section = document.getElementById('tool-'+tool);
+  if(section) section.classList.add('active');
+  hide('loading'); hide('results');
+}
 
 // ════ TOAST ════
 function toast(msg, d=2200){
@@ -314,10 +473,10 @@ function toast(msg, d=2200){
 
 // ════ COURSE TYPES MAP ════
 const COURSE_TYPES = {
-  apwh:  [{id:'dbq',icon:'📜',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'✍️',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'🔍',label:'SAQ',sub:'Short Answer'}],
-  apush: [{id:'dbq',icon:'📜',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'✍️',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'🔍',label:'SAQ',sub:'Short Answer'}],
-  apeuro:[{id:'dbq',icon:'📜',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'✍️',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'🔍',label:'SAQ',sub:'Short Answer'}],
-  apaas: [{id:'frq',icon:'📝',label:'FRQ',sub:'Free Response'}]
+  apwh:  [{id:'dbq',icon:'&#x1F4DC;',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'&#x270D;&#xFE0F;',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'&#x1F50D;',label:'SAQ',sub:'Short Answer'}],
+  apush: [{id:'dbq',icon:'&#x1F4DC;',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'&#x270D;&#xFE0F;',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'&#x1F50D;',label:'SAQ',sub:'Short Answer'}],
+  apeuro:[{id:'dbq',icon:'&#x1F4DC;',label:'DBQ',sub:'Document-Based'},{id:'leq',icon:'&#x270D;&#xFE0F;',label:'LEQ',sub:'Long Essay'},{id:'saq',icon:'&#x1F50D;',label:'SAQ',sub:'Short Answer'}],
+  apaas: [{id:'frq',icon:'&#x1F4DD;',label:'FRQ',sub:'Free Response'}]
 };
 const COURSE_NAMES = {apwh:'AP World History',apush:'AP United States History',apeuro:'AP European History',apaas:'AP African American Studies'};
 
@@ -344,7 +503,7 @@ function selectType(type, btn){
   currentType=type;
   document.querySelectorAll('.type-btn').forEach(b=>b.classList.remove('active'));
   btn.classList.add('active');
-  const titles={dbq:'📜 Document-Based Question',leq:'✍️ Long Essay Question',saq:'🔍 Short Answer Question',frq:'📝 Free Response Question'};
+  const titles={dbq:'\u{1F4DC} Document-Based Question',leq:'\u{270D}\u{FE0F} Long Essay Question',saq:'\u{1F50D} Short Answer Question',frq:'\u{1F4DD} Free Response Question'};
   document.getElementById('step3title').textContent=titles[type]||type.toUpperCase();
   document.getElementById('step3content').innerHTML=buildStep3(type);
   show('step3'); show('step4');
@@ -362,19 +521,17 @@ function buildStep3(type){
 }
 
 // ════ UNIFIED INPUT BOX ════
-// A single clean box: note at top, image preview area, divider, textarea
-// key = unique ID for IMG store
 function uib(key, placeholder, rows=4){
   return `<div class="uib" id="uib-${key}">
     <div class="uib-note">
-      📎 <span>Paste an image (<kbd>Ctrl+V</kbd>/<kbd>⌘V</kbd>), drag &amp; drop, or upload — <em>or</em> just type below</span>
-      <span class="uib-upload-btn">⬆ Upload<input type="file" accept="image/*" onchange="uibFile('${key}',event)"></span>
-      <span class="uib-remove-btn" id="uibrm-${key}" onclick="uibRemove('${key}')">✕ Remove image</span>
+      \u{1F4CE} <span>Paste an image (<kbd>Ctrl+V</kbd>/<kbd>\u{2318}V</kbd>), drag &amp; drop, or upload &mdash; <em>or</em> just type below</span>
+      <span class="uib-upload-btn">\u{2B06} Upload<input type="file" accept="image/*" onchange="uibFile('${key}',event)"></span>
+      <span class="uib-remove-btn" id="uibrm-${key}" onclick="uibRemove('${key}')">\u{2715} Remove image</span>
     </div>
     <div class="uib-img-row" id="uibrow-${key}">
       <img class="uib-img-preview" id="uibimg-${key}" src="" alt="preview">
     </div>
-    <div class="uib-divider" id="uibdiv-${key}" style="display:none">— or add text below —</div>
+    <div class="uib-divider" id="uibdiv-${key}" style="display:none">&mdash; or add text below &mdash;</div>
     <textarea id="uibtxt-${key}" rows="${rows}" placeholder="${placeholder}"
       ondragover="uibDragOver(event,'${key}')" ondragleave="uibDragLeave('${key}')" ondrop="uibDrop(event,'${key}')"
       style="resize:vertical"></textarea>
@@ -392,7 +549,7 @@ function uibSet(key, dataUrl){
   img.src=dataUrl; row.classList.add('show');
   rm.classList.add('show'); div.style.display='flex';
   box.classList.add('has-img');
-  toast('✅ Image added!');
+  toast('Image added!');
 }
 function uibRemove(key){
   delete IMG[key];
@@ -404,7 +561,7 @@ function uibRemove(key){
   img.src=''; row.classList.remove('show');
   rm.classList.remove('show'); div.style.display='none';
   box.classList.remove('has-img');
-  toast('🗑️ Image removed');
+  toast('Image removed');
 }
 function uibFile(key,e){ const f=e.target.files[0]; if(f) uibLoad(key,f); }
 function uibLoad(key,f){ const r=new FileReader(); r.onload=ev=>uibSet(key,ev.target.result); r.readAsDataURL(f); }
@@ -416,7 +573,7 @@ function uibDrop(e,key){
   if(f&&f.type.startsWith('image/')) uibLoad(key,f);
 }
 
-// Global paste → nearest uib textarea focused or first empty uib
+// Global paste -> nearest uib textarea focused or first empty uib
 document.addEventListener('paste',e=>{
   const items=e.clipboardData?.items; if(!items) return;
   for(const item of items){
@@ -428,11 +585,11 @@ document.addEventListener('paste',e=>{
       let key=null;
       if(active && active.id && active.id.startsWith('uibtxt-')) key=active.id.replace('uibtxt-','');
       if(!key){
-        // find first uib without image that's visible
-        const boxes=document.querySelectorAll('.uib:not(.has-img)');
+        // find first visible uib without image
+        const boxes=document.querySelectorAll('.tool-section.active .uib:not(.has-img)');
         if(boxes.length) key=boxes[0].id.replace('uib-','');
       }
-      if(key){ uibLoad(key,f); toast('📋 Image pasted!'); }
+      if(key){ uibLoad(key,f); toast('Image pasted!'); }
       break;
     }
   }
@@ -441,25 +598,25 @@ document.addEventListener('paste',e=>{
 // ════ BUILD LEQ ════
 function buildLEQ(){
   return `<div class="field-group">
-    <label>Prompt <span class="hint">— paste/upload an image or type the prompt text</span></label>
-    ${uib('leqprompt','Type the LEQ prompt here…',3)}
+    <label>Prompt <span class="hint">&mdash; paste/upload an image or type the prompt text</span></label>
+    ${uib('leqprompt','Type the LEQ prompt here\u2026',3)}
   </div>`;
 }
 
 // ════ BUILD DBQ ════
 function buildDBQ(){
   let html=`<div class="field-group">
-    <label>DBQ Prompt <span class="hint">— paste/upload an image of the prompt or type it</span></label>
-    ${uib('dbqprompt','Type the DBQ prompt / essay question here…',2)}
+    <label>DBQ Prompt <span class="hint">&mdash; paste/upload an image of the prompt or type it</span></label>
+    ${uib('dbqprompt','Type the DBQ prompt / essay question here\u2026',2)}
   </div>
   <div class="sdiv">Documents</div>
-  <p style="font-size:.85rem;color:var(--text2);font-weight:600;margin-bottom:14px">Add up to 7 documents. Each has one box — paste a screenshot, upload an image, or type the text (or both).</p>`;
+  <p style="font-size:.85rem;color:var(--text2);font-weight:600;margin-bottom:14px">Add up to 7 documents. Each has one box &mdash; paste a screenshot, upload an image, or type the text (or both).</p>`;
   for(let i=1;i<=7;i++){
     html+=`<div class="doc-block">
       <div class="doc-header"><div class="doc-num">${i}</div><div class="doc-title">Document ${i}</div></div>
       <div class="field-group" style="margin-bottom:10px">
-        <label>Document Content <span class="hint">— image or text or both</span></label>
-        ${uib('doc'+i,'Paste or type the document text here (source, content, attribution)…',3)}
+        <label>Document Content <span class="hint">&mdash; image or text or both</span></label>
+        ${uib('doc'+i,'Paste or type the document text here (source, content, attribution)\u2026',3)}
       </div>
     </div>`;
   }
@@ -469,27 +626,27 @@ function buildDBQ(){
 // ════ BUILD SAQ ════
 function buildSAQ(){
   return `<div class="tog-row" id="saqTog">
-    <button class="tog-btn active" onclick="setSaqSub('stimulus')">🖼️ Stimulus-Based</button>
-    <button class="tog-btn" onclick="setSaqSub('nonstimulus')">📝 Non-Stimulus</button>
+    <button class="tog-btn active" onclick="setSaqSub('stimulus')">\u{1F5BC}\u{FE0F} Stimulus-Based</button>
+    <button class="tog-btn" onclick="setSaqSub('nonstimulus')">\u{1F4DD} Non-Stimulus</button>
   </div>
   <div id="saqStim">
     <div class="field-group">
-      <label>Stimulus <span class="hint">— paste/upload the stimulus image or type the source text</span></label>
-      ${uib('saqstim','Paste or type the stimulus / primary source here…',4)}
+      <label>Stimulus <span class="hint">&mdash; paste/upload the stimulus image or type the source text</span></label>
+      ${uib('saqstim','Paste or type the stimulus / primary source here\u2026',4)}
     </div>
     <div class="sdiv">Questions</div>
   </div>
   <div class="q-block"><div class="q-title">Part A</div>
-    <label style="margin-bottom:5px">Question <span class="hint">— image or text</span></label>
-    ${uib('saqq1','Type Part A question here…',2)}
+    <label style="margin-bottom:5px">Question <span class="hint">&mdash; image or text</span></label>
+    ${uib('saqq1','Type Part A question here\u2026',2)}
   </div>
   <div class="q-block"><div class="q-title">Part B</div>
-    <label style="margin-bottom:5px">Question <span class="hint">— image or text</span></label>
-    ${uib('saqq2','Type Part B question here…',2)}
+    <label style="margin-bottom:5px">Question <span class="hint">&mdash; image or text</span></label>
+    ${uib('saqq2','Type Part B question here\u2026',2)}
   </div>
   <div class="q-block"><div class="q-title">Part C <span style="font-weight:500;font-size:.78rem;color:var(--muted);text-transform:none">(optional)</span></div>
-    <label style="margin-bottom:5px">Question <span class="hint">— image or text</span></label>
-    ${uib('saqq3','Type Part C question here (if applicable)…',2)}
+    <label style="margin-bottom:5px">Question <span class="hint">&mdash; image or text</span></label>
+    ${uib('saqq3','Type Part C question here (if applicable)\u2026',2)}
   </div>`;
 }
 
@@ -503,36 +660,70 @@ function setSaqSub(sub){
 // ════ BUILD FRQ (APAAS) ════
 function buildFRQ(){
   return `<div class="field-group">
-    <label>FRQ Prompt <span class="hint">— paste/upload an image of the prompt or type it</span></label>
-    ${uib('frqprompt','Type the FRQ prompt here…',3)}
+    <label>FRQ Prompt <span class="hint">&mdash; paste/upload an image of the prompt or type it</span></label>
+    ${uib('frqprompt','Type the FRQ prompt here\u2026',3)}
   </div>`;
 }
 
-// ════ BUILD API MESSAGES ════
-function buildMessages(resp){
-  const parts=[];
-  const course=COURSE_NAMES[currentCourse]||currentCourse;
+// ════ GEMINI API CALL ════
+async function callGemini(systemText, images){
+  const apiKey = getApiKey();
+  if(!apiKey){
+    toast('Please enter your Gemini API key first!');
+    throw new Error('No API key');
+  }
 
-  // Helper: add image + text from a uib key
+  const parts = [];
+
+  // Add images
+  for(const dataUrl of images){
+    const mimeMatch = dataUrl.match(/^data:(image\/\w+);base64,/);
+    const mimeType = mimeMatch ? mimeMatch[1] : 'image/png';
+    const base64 = dataUrl.split(',')[1];
+    parts.push({inline_data: {mime_type: mimeType, data: base64}});
+  }
+
+  // Add text
+  parts.push({text: systemText});
+
+  const res = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key='+encodeURIComponent(apiKey), {
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({
+      contents:[{role:'user', parts: parts}],
+      generationConfig:{maxOutputTokens: 2000}
+    })
+  });
+
+  const data = await res.json();
+  if(data.error) throw new Error(data.error.message || 'API error');
+  return (data.candidates?.[0]?.content?.parts || []).map(p=>p.text||'').join('');
+}
+
+// ════ BUILD GRADER MESSAGES ════
+function buildGraderPayload(resp){
+  const images = [];
+  const course = COURSE_NAMES[currentCourse]||currentCourse;
+
   function addUib(key){
-    const img=IMG[key];
-    const txt=document.getElementById('uibtxt-'+key)?.value?.trim();
-    if(img) parts.push({type:'image',source:{type:'base64',media_type:'image/png',data:img.split(',')[1]}});
+    const img = IMG[key];
+    const txt = document.getElementById('uibtxt-'+key)?.value?.trim();
+    if(img) images.push(img);
     return txt||'';
   }
 
-  let systemTxt='';
+  let systemTxt = '';
 
   if(currentType==='leq'){
     const promptTxt=addUib('leqprompt');
-    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Long Essay Question (LEQ) — ${course}\n\n`;
+    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Long Essay Question (LEQ) \u2014 ${course}\n\n`;
     if(promptTxt) systemTxt+=`PROMPT:\n${promptTxt}\n\n`;
     if(IMG['leqprompt']) systemTxt+=`[Prompt image provided above]\n\n`;
     systemTxt+=leqRubric(currentCourse);
   }
   else if(currentType==='dbq'){
     const promptTxt=addUib('dbqprompt');
-    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Document-Based Question (DBQ) — ${course}\n\n`;
+    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Document-Based Question (DBQ) \u2014 ${course}\n\n`;
     if(promptTxt) systemTxt+=`PROMPT:\n${promptTxt}\n\n`;
     if(IMG['dbqprompt']) systemTxt+=`[Prompt image provided above]\n\n`;
     systemTxt+=`DOCUMENTS:\n`;
@@ -552,7 +743,7 @@ function buildMessages(resp){
     const q1txt=addUib('saqq1');
     const q2txt=addUib('saqq2');
     const q3txt=addUib('saqq3');
-    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Short Answer Question (SAQ) — ${isSt?'Stimulus-Based':'Non-Stimulus'} — ${course}\n\n`;
+    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Short Answer Question (SAQ) \u2014 ${isSt?'Stimulus-Based':'Non-Stimulus'} \u2014 ${course}\n\n`;
     if(isSt&&stimTxt) systemTxt+=`STIMULUS:\n${stimTxt}\n\n`;
     if(isSt&&IMG['saqstim']) systemTxt+=`[Stimulus image provided]\n\n`;
     systemTxt+=`QUESTIONS:\nA) ${q1txt||'(image provided)'}${IMG['saqq1']?' [image]':''}\nB) ${q2txt||'(image provided)'}${IMG['saqq2']?' [image]':''}\n`;
@@ -561,14 +752,13 @@ function buildMessages(resp){
   }
   else if(currentType==='frq'){
     const promptTxt=addUib('frqprompt');
-    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Free Response Question (FRQ) — ${course}\n\n`;
+    systemTxt=`You are an expert ${course} teacher and College Board-trained grader.\n\nESSAY TYPE: Free Response Question (FRQ) \u2014 ${course}\n\n`;
     if(promptTxt) systemTxt+=`PROMPT:\n${promptTxt}\n\n`;
     systemTxt+=`Grade using the official AP African American Studies FRQ rubric. Award points for: thesis/claim (0-1), evidence and analysis (0-2), contextualization (0-1), complexity/synthesis (0-1). Total 5 points.\n\n`;
   }
 
   systemTxt+=`\nSTUDENT RESPONSE:\n${resp}\n\n${gradingFormat()}`;
-  parts.push({type:'text',text:systemTxt});
-  return parts;
+  return {text: systemTxt, images: images};
 }
 
 // ════ RUBRICS ════
@@ -576,19 +766,19 @@ function leqRubric(c){
   return `GRADE USING THE OFFICIAL ${c.toUpperCase()} LEQ RUBRIC (7 points total):
 - Thesis/Claim (0-1 pt): historically defensible thesis establishing a clear line of reasoning
 - Contextualization (0-1 pt): broader historical context meaningfully connected to the argument
-- Evidence – Specific Examples (0-1 pt): at least two specific, relevant pieces of historical evidence
-- Evidence – Use of Evidence (0-1 pt): evidence is used to support an argument (not just described)
-- Analysis & Reasoning – Skill (0-1 pt): uses comparison, causation, or continuity and change over time
-- Analysis & Reasoning – Complexity (0-1 pt): demonstrates complex understanding of the topic
-(Evidence = 2 pts, Analysis & Reasoning = 2 pts → 7 total)\n\n`;
+- Evidence \u2013 Specific Examples (0-1 pt): at least two specific, relevant pieces of historical evidence
+- Evidence \u2013 Use of Evidence (0-1 pt): evidence is used to support an argument (not just described)
+- Analysis & Reasoning \u2013 Skill (0-1 pt): uses comparison, causation, or continuity and change over time
+- Analysis & Reasoning \u2013 Complexity (0-1 pt): demonstrates complex understanding of the topic
+(Evidence = 2 pts, Analysis & Reasoning = 2 pts \u2192 7 total)\n\n`;
 }
 function dbqRubric(c){
   return `GRADE USING THE OFFICIAL ${c.toUpperCase()} DBQ RUBRIC (7 points total):
 - Thesis/Claim (0-1 pt): defensible thesis with a line of reasoning
 - Contextualization (0-1 pt): broader historical context meaningfully connected
-- Evidence – Document Content Basic (0-1 pt): uses content of at least 3 documents
-- Evidence – Document Content Advanced (0-1 pt): uses content of at least 6 documents
-- Evidence – Sourcing HAPP (0-1 pt): sourcing (Historical situation, Audience, Purpose, or POV) for 3+ docs
+- Evidence \u2013 Document Content Basic (0-1 pt): uses content of at least 3 documents
+- Evidence \u2013 Document Content Advanced (0-1 pt): uses content of at least 6 documents
+- Evidence \u2013 Sourcing HAPP (0-1 pt): sourcing (Historical situation, Audience, Purpose, or POV) for 3+ docs
 - Evidence Beyond Documents (0-1 pt): specific outside evidence not found in the documents
 - Complexity / Analysis & Reasoning (0-1 pt): demonstrates complex understanding\n\n`;
 }
@@ -604,44 +794,41 @@ function gradingFormat(){
 SCORE: [X]/[TOTAL]
 
 RUBRIC BREAKDOWN:
-[One line per rubric point: ✅ EARNED — one-sentence reason  OR  ❌ NOT EARNED — one-sentence reason]
+[One line per rubric point: \u2705 EARNED \u2014 one-sentence reason  OR  \u274C NOT EARNED \u2014 one-sentence reason]
 
 STRENGTHS:
-• [strength 1]
-• [strength 2]
-• [strength 3 if applicable]
+\u2022 [strength 1]
+\u2022 [strength 2]
+\u2022 [strength 3 if applicable]
 
 AREAS TO IMPROVE:
-• [specific actionable suggestion 1]
-• [specific actionable suggestion 2]
-• [specific actionable suggestion 3 if applicable]
+\u2022 [specific actionable suggestion 1]
+\u2022 [specific actionable suggestion 2]
+\u2022 [specific actionable suggestion 3 if applicable]
 
 OVERALL FEEDBACK:
-[2–3 warm, encouraging sentences summarizing performance and key next steps]
+[2\u20133 warm, encouraging sentences summarizing performance and key next steps]
 
 Be fair, specific, and student-friendly.`;
 }
 
-// ════ SUBMIT ════
+// ════ SUBMIT GRADER ════
 async function submitGrade(){
   const resp=document.getElementById('userResponse').value.trim();
-  if(!resp){ toast('⚠️ Please write your response first!'); return; }
+  if(!resp){ toast('Please write your response first!'); return; }
+  if(!getApiKey()){ toast('Please enter your Gemini API key first!'); return; }
   ['step1','step2','step3','step4'].forEach(id=>hide(id));
   show('loading'); hide('results');
   try{
-    const res=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,messages:[{role:'user',content:buildMessages(resp)}]})
-    });
-    const data=await res.json();
-    const text=(data.content||[]).map(b=>b.text||'').join('');
+    const payload = buildGraderPayload(resp);
+    const text = await callGemini(payload.text, payload.images);
     renderResults(text);
   }catch(err){
-    renderResults('⚠️ Could not connect. Please try again.\n\nError: '+err.message);
+    renderResults('Could not connect. Please try again.\n\nError: '+err.message);
   }
 }
 
-// ════ RENDER RESULTS ════
+// ════ RENDER GRADER RESULTS ════
 function renderResults(raw){
   hide('loading'); show('results');
   const m=raw.match(/SCORE:\s*(\d+)\s*\/\s*(\d+)/i);
@@ -659,31 +846,209 @@ function renderResults(raw){
 
   let html='';
   if(secs['RUBRIC BREAKDOWN']){
-    html+=`<div class="res-sec"><div class="res-sec-t">📊 Rubric Breakdown</div>`;
+    html+=`<div class="res-sec"><div class="res-sec-t">\u{1F4CA} Rubric Breakdown</div>`;
     secs['RUBRIC BREAKDOWN'].split('\n').forEach(line=>{
       line=line.trim(); if(!line) return;
-      const e=line.startsWith('✅'),m2=line.startsWith('❌');
-      if(e||m2) html+=`<div class="rrow ${e?'e':'m'}"><span class="ri">${e?'✅':'❌'}</span><span class="rt">${esc(line.replace(/^[✅❌]\s*/,''))}</span></div>`;
+      const e=line.startsWith('\u2705'),m2=line.startsWith('\u274C');
+      if(e||m2) html+=`<div class="rrow ${e?'e':'m'}"><span class="ri">${e?'\u2705':'\u274C'}</span><span class="rt">${esc(line.replace(/^[\u2705\u274C]\s*/,''))}</span></div>`;
     });
     html+=`</div>`;
   }
   if(secs['STRENGTHS']){
-    html+=`<div class="res-sec"><div class="res-sec-t">🌟 Strengths</div>`;
-    secs['STRENGTHS'].split('\n').forEach(l=>{l=l.trim();if(l) html+=`<div class="fitem"><span class="fi">⭐</span><span>${esc(l.replace(/^[•\-*]\s*/,''))}</span></div>`;});
+    html+=`<div class="res-sec"><div class="res-sec-t">\u{1F31F} Strengths</div>`;
+    secs['STRENGTHS'].split('\n').forEach(l=>{l=l.trim();if(l) html+=`<div class="fitem"><span class="fi">\u{2B50}</span><span>${esc(l.replace(/^[\u2022\-*]\s*/,''))}</span></div>`;});
     html+=`</div>`;
   }
   if(secs['AREAS TO IMPROVE']){
-    html+=`<div class="res-sec"><div class="res-sec-t">🔧 Areas to Improve</div>`;
-    secs['AREAS TO IMPROVE'].split('\n').forEach(l=>{l=l.trim();if(l) html+=`<div class="fitem"><span class="fi">💡</span><span>${esc(l.replace(/^[•\-*]\s*/,''))}</span></div>`;});
+    html+=`<div class="res-sec"><div class="res-sec-t">\u{1F527} Areas to Improve</div>`;
+    secs['AREAS TO IMPROVE'].split('\n').forEach(l=>{l=l.trim();if(l) html+=`<div class="fitem"><span class="fi">\u{1F4A1}</span><span>${esc(l.replace(/^[\u2022\-*]\s*/,''))}</span></div>`;});
     html+=`</div>`;
   }
   if(secs['OVERALL FEEDBACK']){
-    html+=`<div class="res-sec"><div class="res-sec-t">📝 Overall Feedback</div><div class="overall">${esc(secs['OVERALL FEEDBACK'])}</div></div>`;
+    html+=`<div class="res-sec"><div class="res-sec-t">\u{1F4DD} Overall Feedback</div><div class="overall">${esc(secs['OVERALL FEEDBACK'])}</div></div>`;
   }
   if(!html) html=`<div class="overall" style="white-space:pre-wrap">${esc(raw)}</div>`;
-  html+=`<button class="retry-btn" onclick="resetAll()">↩ Grade Another Response</button>`;
+  html+=`<button class="retry-btn" onclick="resetAll()">&#x21A9; Grade Another Response</button>`;
   document.getElementById('resBody').innerHTML=html;
   document.getElementById('results').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+// ════ CHECKER SUBMIT ════
+async function submitChecker(type){
+  const key = 'checker_'+type;
+  const imgData = IMG[key];
+  const txt = document.getElementById('uibtxt-'+key)?.value?.trim();
+
+  if(!txt && !imgData){ toast('Please add text or an image first!'); return; }
+  if(!getApiKey()){ toast('Please enter your Gemini API key first!'); return; }
+
+  const resultDiv = document.getElementById(type+'Result');
+  resultDiv.innerHTML = '';
+  show('loading');
+
+  const images = imgData ? [imgData] : [];
+
+  const prompts = {
+    context: `You are an expert AP History teacher and College Board-trained grader specializing in contextualization.
+
+The student has written a contextualization paragraph for an AP History essay. Analyze it and provide detailed feedback.
+
+${txt ? 'STUDENT CONTEXTUALIZATION:\n'+txt+'\n\n' : ''}${imgData ? '[Student contextualization image provided above]\n\n' : ''}
+
+Evaluate the contextualization against the College Board rubric criteria:
+- Does it describe a broader historical context relevant to the prompt?
+- Does it go beyond the immediate time, place, or topic of the prompt?
+- Does it meaningfully connect the broader context to the argument?
+
+Reply in this format:
+
+RATING: [Earned (1/1) OR Not Yet Earned (0/1)]
+
+WHAT WORKS:
+\u2022 [specific strength 1]
+\u2022 [specific strength 2]
+
+WHAT NEEDS WORK:
+\u2022 [specific improvement 1]
+\u2022 [specific improvement 2]
+
+SUGGESTION:
+[A concrete, rewritten or improved version of their contextualization paragraph that would earn the point. Show them what a strong contextualization looks like.]
+
+Be encouraging but honest. Use AP History terminology.`,
+
+    evidence: `You are an expert AP History teacher and College Board-trained grader specializing in evidence usage.
+
+The student has written evidence paragraph(s) for an AP History essay. Analyze the evidence usage and provide detailed feedback.
+
+${txt ? 'STUDENT EVIDENCE:\n'+txt+'\n\n' : ''}${imgData ? '[Student evidence image provided above]\n\n' : ''}
+
+Evaluate the evidence against College Board rubric criteria:
+- Is the evidence specific and historically accurate?
+- Is it relevant to the argument being made?
+- Is the evidence used to SUPPORT an argument (not just described or listed)?
+- Is there enough evidence to earn full marks?
+
+Reply in this format:
+
+RATING: [Strong / Developing / Needs Work]
+
+EVIDENCE IDENTIFIED:
+\u2022 [evidence piece 1 \u2014 is it specific? relevant? well-used?]
+\u2022 [evidence piece 2 \u2014 same analysis]
+\u2022 [etc.]
+
+WHAT WORKS:
+\u2022 [specific strength]
+
+WHAT NEEDS WORK:
+\u2022 [specific improvement]
+
+SUGGESTION:
+[Show how to better integrate or strengthen the evidence usage. Give a concrete example of how to tie evidence to argument.]
+
+Be encouraging but honest. Use AP History terminology.`,
+
+    outline: `You are an expert AP History teacher and College Board-trained grader specializing in essay structure.
+
+The student has created an outline for an AP History essay. Analyze the outline and provide detailed feedback.
+
+${txt ? 'STUDENT OUTLINE:\n'+txt+'\n\n' : ''}${imgData ? '[Student outline image provided above]\n\n' : ''}
+
+Evaluate the outline against the College Board rubric:
+- Does it have a clear, historically defensible thesis with a line of reasoning?
+- Is the argument organized logically with clear topic sentences?
+- Does it plan for sufficient specific evidence?
+- Does it include contextualization?
+- Does it plan for complexity (multiple perspectives, connections, nuance)?
+
+Reply in this format:
+
+RATING: [Strong / Developing / Needs Work]
+
+THESIS CHECK:
+[Is the thesis defensible? Does it establish a clear line of reasoning? Quote or describe it.]
+
+STRUCTURE CHECK:
+\u2022 [Comment on organization and flow]
+\u2022 [Comment on body paragraph plans]
+
+EVIDENCE PLAN:
+\u2022 [Is enough evidence planned? Is it specific?]
+
+COMPLEXITY PLAN:
+\u2022 [Does the outline address complexity? How could it?]
+
+SUGGESTIONS:
+\u2022 [specific improvement 1]
+\u2022 [specific improvement 2]
+\u2022 [specific improvement 3]
+
+Be encouraging but honest. Use AP History terminology.`
+  };
+
+  try{
+    const text = await callGemini(prompts[type], images);
+    hide('loading');
+    renderCheckerResult(type, text);
+  }catch(err){
+    hide('loading');
+    renderCheckerResult(type, 'Could not connect. Please try again.\n\nError: '+err.message);
+  }
+}
+
+// ════ RENDER CHECKER RESULTS ════
+function renderCheckerResult(type, raw){
+  const titles = {
+    context: '\u{1F30D} Context Check Results',
+    evidence: '\u{1F4DA} Evidence Check Results',
+    outline: '\u{1F4CB} Outline Check Results'
+  };
+  const colors = {
+    context: 'var(--mint)',
+    evidence: 'var(--gold)',
+    outline: 'var(--coral)'
+  };
+
+  const resultDiv = document.getElementById(type+'Result');
+
+  // Parse rating
+  const ratingMatch = raw.match(/RATING:\s*(.+)/i);
+  const rating = ratingMatch ? ratingMatch[1].trim() : '';
+  const isGood = /strong|earned\s*\(1/i.test(rating);
+  const isBad = /needs work|not yet|0\/1/i.test(rating);
+
+  let badgeClass = 's-md';
+  if(isGood) badgeClass = 's-hi';
+  if(isBad) badgeClass = 's-lo';
+
+  let html = `<div class="checker-result">
+    <div class="res-hdr">
+      <h2>${titles[type]}</h2>
+      ${rating ? `<div class="score-badge ${badgeClass}">${esc(rating)}</div>` : ''}
+    </div>
+    <div class="res-body">
+      <div class="checker-feedback">${formatCheckerOutput(raw)}</div>
+      <button class="retry-btn" onclick="document.getElementById('${type}Result').innerHTML=''">&#x21A9; Check Again</button>
+    </div>
+  </div>`;
+
+  resultDiv.innerHTML = html;
+  resultDiv.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function formatCheckerOutput(raw){
+  // Format the checker output nicely
+  let html = esc(raw);
+
+  // Bold section headers
+  html = html.replace(/^(RATING|WHAT WORKS|WHAT NEEDS WORK|SUGGESTION|EVIDENCE IDENTIFIED|THESIS CHECK|STRUCTURE CHECK|EVIDENCE PLAN|COMPLEXITY PLAN|SUGGESTIONS):/gm,
+    '<strong style="color:var(--text);font-size:.95rem">$1:</strong>');
+
+  // Style bullet points
+  html = html.replace(/^\u2022\s*/gm, '<span style="color:var(--sky);font-weight:800">\u2022</span> ');
+
+  return html;
 }
 
 function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
@@ -691,7 +1056,7 @@ function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g
 // ════ RESET ════
 function resetAll(){
   currentCourse=null; currentType=null;
-  Object.keys(IMG).forEach(k=>delete IMG[k]);
+  Object.keys(IMG).forEach(k=>{if(!k.startsWith('checker_')) delete IMG[k];});
   document.querySelectorAll('.course-btn,.type-btn').forEach(b=>b.classList.remove('active'));
   ['step2','step3','step4'].forEach(id=>hide(id));
   show('step1');
@@ -701,8 +1066,8 @@ function resetAll(){
 }
 
 // ════ HELPERS ════
-function show(id){ document.getElementById(id).classList.remove('hidden'); document.getElementById(id).style.display=''; }
-function hide(id){ document.getElementById(id).classList.add('hidden'); }
+function show(id){ const el=document.getElementById(id); if(el){el.classList.remove('hidden'); el.style.display='';} }
+function hide(id){ const el=document.getElementById(id); if(el) el.classList.add('hidden'); }
 function anim(id){ const el=document.getElementById(id); el.style.animation='none'; requestAnimationFrame(()=>el.style.animation=''); }
 </script>
 </body>
