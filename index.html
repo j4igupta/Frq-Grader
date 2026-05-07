@@ -1269,105 +1269,297 @@ function buildMessages(resp){
 
 // ════ RUBRICS ════
 function leqRubric(c){
-  return `GRADE USING THE OFFICIAL COLLEGE BOARD ${c.toUpperCase()} LEQ RUBRIC — 6 POINTS TOTAL:
+  return `You are a College Board AP exam reader grading a ${c.toUpperCase()} Long Essay Question (LEQ). This is a SUMMATIVE rubric — students START at 0 and can only EARN points upward. You cannot subtract points. Every point is awarded independently. Award every point the student has earned. Do not be stingy — if the evidence is there, award the point.
 
-A. THESIS/CLAIM (0-1 pt):
-   EARN: Responds with a historically defensible thesis that establishes a line of reasoning. Must be located in the intro or conclusion — not just a restatement of the prompt.
-   DO NOT EARN: If the response merely restates or rephrases the prompt, or if the claim is in the body only.
+OFFICIAL LEQ RUBRIC — 6 POINTS TOTAL:
 
-B. CONTEXTUALIZATION (0-1 pt):
-   EARN: Describes broader historical context (events/developments/processes BEFORE, DURING, or CONTINUING AFTER the time frame) and meaningfully connects it to the argument. Must be more than a phrase or reference.
-   DO NOT EARN: If only a brief mention/phrase with no connection to the argument.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT A — THESIS / CLAIM (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response:
+  ✔ Makes a historically defensible claim AND
+  ✔ Establishes a line of reasoning (not just a topic — it must explain HOW or WHY)
+  ✔ Is located in the introduction OR conclusion (not mid-body)
 
-C. EVIDENCE (0-2 pts — pick one):
-   1 pt: Provides at least TWO specific, relevant historical examples of evidence related to the topic.
-   2 pts: Uses specific historical evidence to SUPPORT AN ARGUMENT in response to the prompt (not just described/listed).
+DO NOT AWARD if the response:
+  ✘ Only restates or paraphrases the prompt
+  ✘ Makes a claim with no line of reasoning
+  ✘ Only has the thesis buried in a body paragraph without framing
 
-D. ANALYSIS AND REASONING (0-2 pts):
-   1 pt (Historical Reasoning Skill): Uses comparison, causation, OR continuity and change over time (CCOT) to frame or structure the argument. The reasoning may be uneven or imbalanced.
-   2 pts (Complexity): Demonstrates complex understanding through ANY of these methods:
-      • Explaining nuance by analyzing multiple variables
-      • Explaining similarity AND difference, OR continuity AND change, OR multiple causes, OR cause AND effect
-      • Making relevant and insightful connections within and across periods
-      • Corroborating multiple perspectives across themes
-      • Qualifying/modifying the argument by considering diverse/alternative views or evidence
-   NOTE: Complexity must be part of the argument, not merely a phrase or reference. DO NOT award complexity just for mentioning counterarguments briefly.
+GRADER NOTE: A thesis doesn't need to be sophisticated — it just needs a defensible claim + a line of reasoning (e.g., "because X led to Y").
 
-SCORING RULES:
-- Maximum score is 6/6
-- Count each earned point carefully before reporting the total
-- The "Evidence" category is worth 0-2 pts total (not two separate 1-pt categories)
-- The "Analysis and Reasoning" category is worth 0-2 pts total
-- Double-check your addition before reporting SCORE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT B — CONTEXTUALIZATION (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response:
+  ✔ Describes a broader historical context (developments/events/processes from BEFORE, DURING, or CONTINUING AFTER the prompt's time frame)
+  ✔ Meaningfully connects that context to the argument (explains HOW/WHY it relates — not just mentions it)
+  ✔ Is more than a brief phrase or passing reference — must be at least 2–3 sentences of actual historical development
+
+DO NOT AWARD if:
+  ✘ Context is only a one-line mention with no connection to the argument
+  ✘ Context is within the same time frame without extending beyond it
+  ✘ Context is vague ("there was conflict in this period")
+
+GRADER NOTE: This is the hardest point for students. Require genuine development AND connection. A full paragraph of context that ties to the argument earns this point.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT C — EVIDENCE: SPECIFIC EXAMPLES (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response:
+  ✔ Provides at least TWO specific pieces of relevant historical evidence (names, events, dates, developments, policies, people, etc.)
+  ✔ Evidence must be accurate and relevant to the prompt topic
+  ✔ Can be anywhere in the essay — body paragraphs count
+
+DO NOT AWARD if:
+  ✘ Evidence is only general or vague (e.g., "many wars happened")
+  ✘ Only one specific piece of evidence is present
+  ✘ Evidence is factually incorrect
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT D — EVIDENCE: SUPPORTS AN ARGUMENT (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response:
+  ✔ Uses specific historical evidence to SUPPORT A STATED ARGUMENT (not just describe or list facts)
+  ✔ The evidence is connected to a claim about WHY or HOW something happened
+  ✔ This is a higher bar than Point C — evidence must be doing argumentative work
+
+NOTE: Student must also earn Point C to earn Point D. If they don't have 2 specific examples, they cannot earn this point.
+
+DO NOT AWARD if:
+  ✘ Evidence is only described/listed without connecting to an argument
+  ✘ The essay just narrates history without making claims
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT E — ANALYSIS & REASONING: HISTORICAL REASONING SKILL (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response uses at least ONE of these skills to frame or structure an argument:
+  • CAUSATION: Explains causes and/or effects of a historical development
+  • COMPARISON: Compares similarities and/or differences between cases, regions, groups, or time periods
+  • CONTINUITY AND CHANGE OVER TIME (CCOT): Explains what changed and/or what stayed the same over time
+
+The reasoning skill must be used throughout the essay or in a sustained way — not just mentioned in passing.
+Reasoning may be uneven or imbalanced and still earn the point.
+
+DO NOT AWARD if:
+  ✘ The essay only describes without applying a reasoning skill
+  ✘ The skill is only mentioned in a topic sentence but not developed
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT F — ANALYSIS & REASONING: COMPLEXITY (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response demonstrates complex understanding through ANY of the following:
+  • Explains NUANCE by analyzing multiple variables (economic, political, social, etc.)
+  • Explains BOTH similarity AND difference, OR continuity AND change, OR multiple causes, OR cause AND effect
+  • Makes insightful connections WITHIN or ACROSS time periods, geographical areas, or themes
+  • Corroborates multiple perspectives or themes
+  • Qualifies or modifies the argument by considering diverse/alternative evidence or interpretations
+
+COMPLEXITY MUST:
+  ✔ Be sustained — not just a single sentence tacked on
+  ✔ Be part of the actual argument — not just a disclaimer
+  ✔ Demonstrate genuinely sophisticated historical thinking
+
+DO NOT AWARD if:
+  ✘ Complexity is only in a brief final sentence ("However, some historians disagree")
+  ✘ Student merely mentions a counterargument without developing it
+  ✘ Complexity is vague or formulaic
 
 \n\n`;
 }
 function dbqRubric(c){
-  return `GRADE USING THE OFFICIAL COLLEGE BOARD ${c.toUpperCase()} DBQ RUBRIC — 7 POINTS TOTAL:
+  return `You are a College Board AP exam reader grading a ${c.toUpperCase()} Document-Based Question (DBQ). This is a SUMMATIVE rubric — students START at 0 and can only EARN points upward. You cannot subtract points. Award every point the student has genuinely earned. Do not penalize for imperfection — reward demonstrated skill.
 
-A. THESIS/CLAIM (0-1 pt):
-   EARN: Responds with a historically defensible thesis that establishes a line of reasoning. Located in intro or conclusion only.
-   DO NOT EARN: If it merely restates/rephrases the prompt.
+OFFICIAL DBQ RUBRIC — 7 POINTS TOTAL:
 
-B. CONTEXTUALIZATION (0-1 pt):
-   EARN: Describes broader historical context (before, during, or continuing after the time frame) and meaningfully connects it to the argument. Must be more than a phrase or reference.
-   DO NOT EARN: If only a brief mention with no meaningful connection to the argument.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT A — THESIS / CLAIM (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Response makes a historically defensible claim AND
+  ✔ Establishes a line of reasoning (explains HOW/WHY — not just a topic statement)
+  ✔ Located in the introduction OR conclusion (not only in body paragraphs)
 
-C. EVIDENCE (0-3 pts total):
-   C1 — Document Content Basic (1 pt): Accurately DESCRIBES (not quotes) the content of at least THREE documents to address the topic.
-   C2 — Document Content Advanced (1 additional pt): Accurately DESCRIBES the content of at least SIX documents AND uses those documents to SUPPORT AN ARGUMENT. (Student must earn C1 first.)
-   C3 — Evidence Beyond the Documents (1 pt): Describes at least one piece of specific historical evidence NOT found in the documents, used to support an argument. Must be more than a phrase or reference. Must be DIFFERENT from the evidence used for contextualization.
+DO NOT AWARD if:
+  ✘ Merely restates or paraphrases the prompt
+  ✘ Claim has no reasoning attached (e.g., "Trade increased in this period" with no explanation)
 
-D. ANALYSIS AND REASONING (0-2 pts total):
-   D1 — Sourcing / HAPP (1 pt): For at least THREE documents, EXPLAINS (not just identifies) HOW or WHY the document's Historical situation, Audience, Purpose, OR Point of View is relevant to an argument. A single sentence per document explaining the "so what" is required.
-   D2 — Complexity (1 pt): Demonstrates a complex understanding of the historical development through ANY of the following:
-      • Explaining nuance by analyzing multiple variables
-      • Explaining BOTH similarity and difference, OR continuity AND change, OR multiple causes, OR cause AND effect
-      • Making relevant and insightful connections within and across periods
-      • Corroborating multiple perspectives across themes
-      • Qualifying/modifying the argument by considering diverse/alternative views or evidence
-   IMPORTANT: Complexity is NOT automatically earned by using 6 documents. It requires demonstrating complex historical thinking as described above. The complexity must be part of the argument, not merely a phrase.
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT B — CONTEXTUALIZATION (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Describes broader historical context from BEFORE, DURING, or CONTINUING AFTER the time frame
+  ✔ Meaningfully connects that context to the argument (not just "this happened, now here's my essay")
+  ✔ Developed for at least 2–3 sentences — not just a phrase
 
-SCORING RULES:
-- Maximum score is 7/7
-- Evidence section is worth up to 3 points (C1 + C2 + C3)
-- Analysis and Reasoning section is worth up to 2 points (D1 + D2)
-- Count each earned point carefully and double-check your addition before reporting SCORE
-- Report as: SCORE: X/7
+DO NOT AWARD if:
+  ✘ Only a brief one-line mention
+  ✘ Context has no stated connection to the argument
+  ✘ Context is within the prompt's time frame only and doesn't extend beyond it
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT C1 — DOCUMENT CONTENT: BASIC (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Response accurately describes (not just quotes) the content of at least THREE documents
+  ✔ Each described document is used to address the topic of the prompt
+  ✔ Description goes beyond quoting — student shows they understand what the document means
+
+DO NOT AWARD if:
+  ✘ Fewer than 3 documents are used
+  ✘ Documents are only quoted without any description/interpretation
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT C2 — DOCUMENT CONTENT: ADVANCED (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF (C1 must also be earned):
+  ✔ Response accurately describes the content of at least FOUR documents (note: as of 2025 CED, the threshold is 4 documents for this point — NOT 6)
+  ✔ Those documents are used to SUPPORT AN ARGUMENT (not just described)
+  ✔ Evidence from documents is tied to thesis or sub-claims
+
+DO NOT AWARD if:
+  ✘ C1 was not earned
+  ✘ Fewer than 4 documents are used to support an argument
+  ✘ Documents are described but not connected to an argument
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT C3 — EVIDENCE BEYOND THE DOCUMENTS (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Describes at least ONE piece of specific historical evidence NOT in the provided documents
+  ✔ Evidence is specific (not vague — must be a real name, event, date, policy, person, or development)
+  ✔ Used to support an argument
+  ✔ This evidence must be DIFFERENT from what was used for contextualization
+
+DO NOT AWARD if:
+  ✘ "Outside evidence" is vague or general ("many people opposed this")
+  ✘ Evidence appears to be something already in the documents
+  ✘ Evidence is only mentioned without connecting to an argument
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT D1 — SOURCING / HAPP (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ For at least THREE documents, the student EXPLAINS (not just identifies) how or why the document's:
+    — Historical situation (context in which it was created),
+    — Audience (who the author was addressing),
+    — Purpose (why the author created it), OR
+    — Point of View (author's perspective, background, or bias)
+    …is relevant to an argument
+  ✔ Each sourcing comment must include the "so what" — why does this HAPP element affect how we use this document?
+  ✔ A single sentence per document explaining the "so what" is sufficient
+
+DO NOT AWARD if:
+  ✘ Fewer than 3 documents receive sourcing analysis
+  ✘ Student only identifies HAPP without explaining its significance (e.g., "this document was written by a merchant" with no further analysis)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+POINT D2 — COMPLEXITY (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF the response demonstrates complex understanding through ANY of:
+  • Explaining NUANCE by analyzing multiple variables (economic AND social AND political, etc.)
+  • Explaining BOTH similarity and difference, OR continuity AND change, OR multiple causes, OR cause AND effect
+  • Making insightful connections across time periods, regions, or themes
+  • Corroborating multiple perspectives or document groupings
+  • Qualifying/modifying the argument using diverse evidence or alternative interpretations
+
+COMPLEXITY MUST:
+  ✔ Be developed — not just one sentence
+  ✔ Be integrated into the argument — not a throwaway disclaimer
+  ✔ Reflect genuinely sophisticated historical thinking
+
+DO NOT AWARD if:
+  ✘ Complexity is only one brief sentence at the end
+  ✘ Student simply uses 6 documents — that alone does not demonstrate complexity
+  ✘ Counterargument is mentioned but not actually developed
 
 \n\n`;
 }
 function saqRubric(c){
-  return `GRADE USING THE OFFICIAL ${c.toUpperCase()} SAQ RUBRIC (3 points total):
-- Part A (0-1 pt): historically accurate claim or analysis directly answering Part A
-- Part B (0-1 pt): historically accurate claim or analysis directly answering Part B
-- Part C (0-1 pt): historically accurate claim or analysis directly answering Part C (if applicable)\n\n`;
+  return `You are a College Board AP exam reader grading a ${c.toUpperCase()} Short Answer Question (SAQ). This is a SUMMATIVE rubric — students START at 0 and can only EARN points upward. You cannot subtract points. Grade each part independently.
+
+OFFICIAL SAQ RUBRIC — 3 POINTS TOTAL (1 point per part):
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART A — (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Responds with a historically accurate answer that directly addresses Part A
+  ✔ Goes beyond just restating the question — makes a claim, identifies a development, or provides an explanation
+  ✔ Is specific enough to be historically grounded (not vague)
+
+DO NOT AWARD if:
+  ✘ Response is historically inaccurate
+  ✘ Response doesn't address what Part A actually asks
+  ✘ Response is only a vague generalization
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART B — (0 or 1 point)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Responds with a historically accurate answer that directly addresses Part B
+  ✔ Demonstrates understanding of the relevant historical development, event, or relationship
+  ✔ Is specific and relevant
+
+DO NOT AWARD if:
+  ✘ Response is historically inaccurate
+  ✘ Response is off-topic or doesn't answer what Part B asks
+  ✘ Response is only vague or general
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+PART C — (0 or 1 point, if applicable)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+AWARD 1 POINT IF:
+  ✔ Responds with a historically accurate answer that directly addresses Part C
+  ✔ Provides a specific explanation, example, or analysis as the question requires
+  ✔ Is relevant and historically grounded
+
+DO NOT AWARD if:
+  ✘ Part C was not asked or left blank (mark as N/A in this case)
+  ✘ Response is historically inaccurate or off-topic
+
+GRADER NOTES:
+- SAQs do NOT require a thesis — students should not be penalized for not having one
+- Students do NOT need to follow essay structure — bullet points and direct answers are fine
+- Reward accuracy and relevance — the bar is: does this correctly and specifically answer the question?
+- Be generous with borderline cases — if the historical content is accurate and on-topic, award the point
+
+\n\n`;
 }
 function gradingFormat(){
-  return `Grade strictly per the rubric above. Reply in EXACTLY this format:
+  return `GRADING INSTRUCTIONS:
+- This is a SUMMATIVE rubric. Start at 0 and ADD points for each criterion met. Never subtract.
+- Evaluate each point independently. A weak essay can still earn some points.
+- Be generous on borderline cases — if the student demonstrated the skill, award the point.
+- Match College Board standards: real AP graders are trained to find and reward evidence of skill.
+
+Reply in EXACTLY this format (do not skip any section):
 
 RUBRIC BREAKDOWN:
-[One line per rubric point: ✅ EARNED — one-sentence reason  OR  ❌ NOT EARNED — one-sentence reason]
+[One line per rubric point in order. Use EXACTLY this format:]
+✅ [POINT NAME] — EARNED: [one specific sentence explaining WHY this was earned, citing exact evidence from the essay]
+❌ [POINT NAME] — NOT EARNED: [one specific sentence explaining exactly what was missing and what the student would need to do to earn it]
 
 ADDITION CHECK:
-[List each earned point: e.g. "Thesis ✅ + Contextualization ✅ + Doc Basic ✅ + Doc Advanced ❌ + Beyond Docs ✅ + HAPP ✅ + Complexity ❌ = 4 pts earned"]
+[List each point by name with ✅ or ❌, then total. Example:]
+Thesis ✅ (1) + Contextualization ❌ (0) + Specific Examples ✅ (1) + Supports Argument ✅ (1) + Historical Reasoning ✅ (1) + Complexity ❌ (0) = 4 points earned
 
 SCORE: [X]/[TOTAL]
 
 STRENGTHS:
-• [strength 1]
-• [strength 2]
-• [strength 3 if applicable]
+• [Specific strength with reference to what the student actually wrote]
+• [Second specific strength]
+• [Third strength if applicable]
 
 AREAS TO IMPROVE:
-• [specific actionable suggestion 1]
-• [specific actionable suggestion 2]
-• [specific actionable suggestion 3 if applicable]
+• [Specific, actionable improvement tied to a rubric point they missed — what exactly should they add or change?]
+• [Second specific improvement]
+• [Third if applicable]
 
 OVERALL FEEDBACK:
-[2–3 warm, encouraging sentences summarizing performance and key next steps]
+[2–3 sentences: warm, honest, and specific. Acknowledge what they did well. Give them a clear, concrete next step. Sound like a knowledgeable teacher who wants them to succeed.]
 
-Be fair, specific, and student-friendly. Make sure your SCORE matches the count in your ADDITION CHECK.`;
+Make sure SCORE matches ADDITION CHECK exactly.`;
 }
 
 // ════ SUBMIT ════
